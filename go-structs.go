@@ -58,6 +58,11 @@ func (g gun) Weild() bool {
 	return true
 }
 
+func (c chair) Weild() bool {
+	fmt.Println("You've wielded a chair! Having a bad day?!")
+	return true
+}
+
 func weilder(w weapon) bool {
 	fmt.Println("Wielding")
 	return w.Weild()
