@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type power struct {
 	attack  int
@@ -8,9 +11,9 @@ type power struct {
 }
 
 type location struct {
-	x float32
-	y float32
-	z float32
+	x float64
+	y float64
+	z float64
 }
 
 type nonPlayerCharacter struct {
@@ -55,6 +58,21 @@ func weilder(w weapon) bool {
 	return w.Weild()
 }
 
+func (loc location) String() string {
+	return fmt.Sprintf("(%f, %f, %f)", loc.x, loc.y, loc.z)
+}
+
+func (loc location) euclideanDistance(target location) float64 {
+	return math.Sqrt(
+		(loc.x-target.x)*(loc.x-target.x) +
+			(loc.y-target.y)*(loc.y-target.y) +
+			(loc.z-target.z)*(loc.z-target.z))
+}
+
+func (npc nonPlayerCharacter) distanceTo(target nonPlayerCharacter) float64 {
+	return npc.loc.euclideanDistance(target.loc)
+}
+
 func main() {
 	fmt.Println("Structs...")
 
@@ -82,9 +100,11 @@ func main() {
 
 	magnum := gun{attacker: attacker{attackpower: 10, dmgbonus: 20}, bulletsremaining: 11}
 
-	fmt.Println("Weapons: sword: %v, gun: %v\n", excalibur, magnum)
+	fmt.Printf("Weapons: sword: %v, gun: %v\n", excalibur, magnum)
 
 	weilder(excalibur)
 
 	weilder(magnum)
+
+	fmt.Printf("Npc %v is %f units away from Npc %v\n", demon, demon.distanceTo(anotherDemon), anotherDemon)
 }
