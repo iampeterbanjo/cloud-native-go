@@ -39,6 +39,11 @@ type gun struct {
 	bulletsremaining int
 }
 
+type chair struct {
+	legcount int
+	leather  bool
+}
+
 type weapon interface {
 	Weild() bool
 }
@@ -105,6 +110,10 @@ func main() {
 	weilder(excalibur)
 
 	weilder(magnum)
+
+	stool := chair{legcount: 3, leather: true}
+
+	weilder(stool)
 
 	fmt.Printf("Npc %v is %f units away from Npc %v\n", demon, demon.distanceTo(anotherDemon), anotherDemon)
 }
